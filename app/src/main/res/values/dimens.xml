@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--登陆界面字体大小-->
+    <dimen name="login_edit_size">24sp</dimen>
+
+    <!--注册页面字体大小-->
+    <dimen name="register_edit_size">16sp</dimen>
+
+    <!--星期字体大小-->
+    <dimen name="week_textSize">12dp</dimen>
+    <dimen name="week_day_textSize">22dp</dimen>
+</resources>

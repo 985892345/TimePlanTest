@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/fg2_add_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?actionBarSize"
+        android:background="@color/litterWhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:subtitleTextColor="@color/black"
+        app:title="@string/fg2_toolbar"
+        app:titleTextColor="@color/black" />
+
+    <LinearLayout
+        android:id="@+id/fg2_week_linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fg2_add_toolbar">
+
+        <com.example.timeplantest.weight.weekview.WeekView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:weekTextSize="@dimen/week_textSize" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/fg2_vp_day_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <com.example.timeplantest.weight.timeselectview.TimeSelectView
+        android:id="@+id/fg2_timeSelectView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:amount="2"
+        app:cardCornerRadius="8dp"
+        app:centerTime="-1"
+        app:isShowDiffTime="true"
+        app:defaultTaskName="点击设置"
+        app:defaultBorderColor="@color/border_color"
+        app:defaultInsideColor="@color/inside_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fg2_week_linearLayout"
+        app:timeRangeArray="0-18,6-0"
+        app:timelineInterval="10dp"
+        app:timelineWidth="160dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

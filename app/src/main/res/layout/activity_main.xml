@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.timeplantest.weight.drawerLayout.MyDrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/darker_gray">
+
+    <!--主页内容-->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/drawer_main" />
+
+    </androidx.cardview.widget.CardView>
+
+    <!--侧边栏内容-->
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        layout="@layout/drawer_left_menu" />
+
+</com.example.timeplantest.weight.drawerLayout.MyDrawerLayout>

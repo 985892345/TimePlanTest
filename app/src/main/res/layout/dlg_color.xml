@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.example.timeplantest.weight.RoundCornerView
+            android:id="@+id/dlg_default_border_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toStartOf="@+id/dlg_default_inside_color"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.example.timeplantest.weight.RoundCornerView
+            android:id="@+id/dlg_default_inside_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/dlg_default_border_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/dlg_default_border_color"
+            app:layout_constraintTop_toTopOf="@+id/dlg_default_border_color" />
+
+        <com.example.timeplantest.weight.RoundCornerView
+            android:id="@+id/dlg_color1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/dlg_color2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/dlg_color2" />
+
+        <com.example.timeplantest.weight.RoundCornerView
+            android:id="@+id/dlg_color2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/dlg_color3"
+            app:layout_constraintTop_toTopOf="@+id/dlg_color3" />
+
+        <com.example.timeplantest.weight.RoundCornerView
+            android:id="@+id/dlg_color3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dlg_default_border_color" />
+
+        <com.example.timeplantest.weight.RoundCornerView
+            android:id="@+id/dlg_color4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toEndOf="@+id/dlg_color3"
+            app:layout_constraintTop_toTopOf="@+id/dlg_color3" />
+
+        <com.example.timeplantest.weight.RoundCornerView
+            android:id="@+id/dlg_color5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/dlg_color4"
+            app:layout_constraintTop_toTopOf="@+id/dlg_color4" />
+
+        <com.example.timeplantest.weight.RoundCornerView
+            android:id="@+id/dlg_color6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/dlg_color7"
+            app:layout_constraintTop_toTopOf="@+id/dlg_color7" />
+
+        <com.example.timeplantest.weight.RoundCornerView
+            android:id="@+id/dlg_color7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/dlg_color8"
+            app:layout_constraintTop_toTopOf="@+id/dlg_color8" />
+
+        <com.example.timeplantest.weight.RoundCornerView
+            android:id="@+id/dlg_color8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="@+id/dlg_color3"
+            app:layout_constraintStart_toStartOf="@+id/dlg_color3"
+            app:layout_constraintTop_toBottomOf="@+id/dlg_color3" />
+
+        <com.example.timeplantest.weight.RoundCornerView
+            android:id="@+id/dlg_color9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toEndOf="@+id/dlg_color8"
+            app:layout_constraintTop_toTopOf="@+id/dlg_color8" />
+
+        <com.example.timeplantest.weight.RoundCornerView
+            android:id="@+id/dlg_color10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toEndOf="@+id/dlg_color9"
+            app:layout_constraintTop_toTopOf="@+id/dlg_color9" />
+
+        <com.example.timeplantest.weight.RoundCornerView
+            android:id="@+id/dlg_color11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/dlg_color12"
+            app:layout_constraintTop_toTopOf="@+id/dlg_color12" />
+
+        <com.example.timeplantest.weight.RoundCornerView
+            android:id="@+id/dlg_color12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/dlg_color8"
+            app:layout_constraintTop_toTopOf="@+id/dlg_color15" />
+
+        <com.example.timeplantest.weight.RoundCornerView
+            android:id="@+id/dlg_color13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toEndOf="@+id/dlg_color15"
+            app:layout_constraintTop_toTopOf="@+id/dlg_color15" />
+
+        <com.example.timeplantest.weight.RoundCornerView
+            android:id="@+id/dlg_color14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toEndOf="@+id/dlg_color13"
+            app:layout_constraintTop_toTopOf="@+id/dlg_color13" />
+
+        <com.example.timeplantest.weight.RoundCornerView
+            android:id="@+id/dlg_color15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/dlg_color8"
+            app:layout_constraintStart_toStartOf="@+id/dlg_color8"
+            app:layout_constraintTop_toBottomOf="@+id/dlg_color8" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
