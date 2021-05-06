@@ -8,7 +8,7 @@
     <string name="left_menu1">菜单1</string>
     <string name="left_menu2">菜单2</string>
     <string name="left_menu3">菜单3</string>
-    <string name="left_menu4">设置</string>
+    <string name="left_menu4">菜单4</string>
 
     <!--    BottomNavigationView-->
     <string name="title_first">现在</string>

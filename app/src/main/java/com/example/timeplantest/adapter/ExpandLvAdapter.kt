@@ -1,5 +1,6 @@
 package com.example.timeplantest.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,10 +18,12 @@ import java.util.*
  *@description
  */
 class ExpandLvAdapter(data: List<ExpandBean>,
+                      onFinished: ((taskBean: TaskBean, tSViewBean: TSViewTaskBean, isFinish: Boolean) -> Unit),
                       onDeleted: ((taskBean: TaskBean, tSViewBean: TSViewTaskBean) -> Unit),
                       onClickItem: ((taskBean: TaskBean, tSViewBean: TSViewTaskBean) -> Unit)) : BaseExpandableListAdapter() {
 
     private val mData = data
+    private val mOnFinished = onFinished
     private val mOnDeleted = onDeleted
     private val mOnClickItem = onClickItem
 
@@ -100,6 +103,10 @@ class ExpandLvAdapter(data: List<ExpandBean>,
         val tvTime = childViewHolder.mTvTime!!
         val btnDeleted = childViewHolder.mBtnDelete!!
         val btnItem = childViewHolder.mBtnItem!!
+
+        if (mData[groupPosition].isFinish.size <= childPosition) {
+            mData[groupPosition].isFinish.add(false)
+        }
         cbIsFinish.isChecked = mData[groupPosition].isFinish[childPosition]
         tvName.text = mData[groupPosition].children[childPosition]
         tvTime.text = mData[groupPosition].time[childPosition]
@@ -111,7 +118,8 @@ class ExpandLvAdapter(data: List<ExpandBean>,
             setTextColor(tvName, tvTime, true)
         }
         cbIsFinish.setOnClickListener {
-            val taskBean = mData[groupPosition].tSViewBean[childPosition].any1 as TaskBean
+            val tSViewBean = mData[groupPosition].tSViewBean[childPosition]
+            val taskBean = tSViewBean.any1 as TaskBean
             val isFinish = childViewHolder.mCbIsFinish!!.isChecked
             taskBean.isFinish = isFinish
             taskBean.save()
@@ -120,6 +128,7 @@ class ExpandLvAdapter(data: List<ExpandBean>,
             }else if (!isToTime) {
                 setTextColor(tvName, tvTime, true)
             }
+            mOnFinished.invoke(taskBean, tSViewBean, isFinish)
         }
         btnDeleted.setOnClickListener {
             val tSViewBean = mData[groupPosition].tSViewBean[childPosition]

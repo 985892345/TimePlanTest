@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp">
+
+    <ImageView
+        android:id="@+id/service_img_alarm"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_alignStart="@+id/service_hint"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/ic_alarm"
+        tools:ignore="ContentDescription" />
+
+    <Button
+        android:id="@+id/service_btn_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="10dp"
+        android:layout_toStartOf="@+id/service_btn_finish"
+        android:background="@null" />
+
+    <TextView
+        android:id="@+id/service_tv_task_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/service_img_alarm"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="5dp"
+        android:text="任务名称"
+        android:textColor="#303030" />
+
+    <TextView
+        android:id="@+id/service_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/service_tv_task_name"
+        android:layout_alignStart="@+id/service_tv_task_name"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="4dp"
+        android:text="开始行动吧！" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/service_tv_task_name"
+        android:layout_alignBottom="@+id/service_hint"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="结束时间：" />
+
+        <TextView
+            android:id="@+id/service_tv_endTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="24:00" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/service_btn_finish"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_alignBottom="@+id/service_tv_task_name"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="-14dp"
+        android:text="完成" />
+
+    <TextView
+        android:id="@+id/service_tv_app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/service_img_alarm"
+        android:layout_alignBottom="@+id/service_img_alarm"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toEndOf="@+id/service_img_alarm"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:textSize="10sp" />
+
+</RelativeLayout>

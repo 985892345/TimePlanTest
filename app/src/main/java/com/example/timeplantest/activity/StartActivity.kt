@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import com.example.timeplantest.R
+import com.example.timeplantest.service.AlarmService
 import java.lang.Thread.sleep
 import kotlin.concurrent.thread
 
@@ -33,10 +34,13 @@ class StartActivity : BaseActivity() {
             textView.text = "V ?"
         }
 
+        val intent = Intent(this, AlarmService::class.java)
+        startService(intent)
+
         thread {
             sleep(1000)
-            val intent = Intent(applicationContext, MainActivity::class.java)
-            startActivity(intent)
+            val intent2 = Intent(this, MainActivity::class.java)
+            startActivity(intent2)
             finish()
         }
     }

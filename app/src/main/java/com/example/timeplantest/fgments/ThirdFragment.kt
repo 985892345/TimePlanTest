@@ -1,15 +1,18 @@
 package com.example.timeplantest.fgments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.example.timeplantest.R
+import com.example.timeplantest.activity.LoginActivity
 
 /**
  *@author 985892345
@@ -26,7 +29,15 @@ class ThirdFragment(activity: AppCompatActivity, drawerLayout: DrawerLayout) : F
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         mRootView = inflater.inflate(R.layout.fragment3_third, container, false)
         initToolbar()
+        initView()
         return mRootView
+    }
+
+    private fun initView() {
+        mRootView.findViewById<Button>(R.id.fg3_btn).setOnClickListener {
+            val intent = Intent(context, LoginActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun initToolbar() {

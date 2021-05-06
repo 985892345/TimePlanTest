@@ -1,9 +1,9 @@
 package com.example.timeplantest.activity
 
-import android.content.Intent
+import android.content.*
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
+import android.os.IBinder
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
@@ -21,8 +21,8 @@ import com.example.timeplantest.bean.TaskBean
 import com.example.timeplantest.fgments.FirstFragment
 import com.example.timeplantest.fgments.SecondFragment
 import com.example.timeplantest.fgments.ThirdFragment
+import com.example.timeplantest.service.AlarmService
 import com.example.timeplantest.weight.drawerLayout.InDrawerLayout
-import com.example.timeplantest.weight.timeselectview.TimeSelectView
 import com.example.timeplantest.weight.timeselectview.bean.TSViewDayBean
 import com.example.timeplantest.weight.timeselectview.bean.TSViewTaskBean
 import com.example.timeplantest.weight.timeselectview.utils.TSViewLongClick
@@ -47,10 +47,41 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     private lateinit var mSecondFg: SecondFragment
     private lateinit var mThirdFg: ThirdFragment
 
+    private lateinit var mAlarmService: AlarmService
+
+    private val mServiceConnection = object : ServiceConnection {
+
+        override fun onServiceConnected(name: ComponentName, service: IBinder) {
+            mAlarmService = (service as AlarmService.AlarmBinder).getService()
+            sendForeground()
+            registerReceiver(object : BroadcastReceiver() {
+                override fun onReceive(context: Context, intent: Intent) {
+                    (mPreTaskBean.any1 as TaskBean).isFinish = true
+                    mAlarmService.stopFore()
+                    mFirstFg.notifyExpandListViewDataSetChange()
+                    mSecondFg.notifyItem(mCurrentPage * 7 + mCurrentDay)
+                    sendForeground()
+                }
+            }, IntentFilter("${this@MainActivity.packageName}_service_task_finish"))
+
+            registerReceiver(object : BroadcastReceiver() {
+                override fun onReceive(context: Context, intent: Intent) {
+                    mFirstFg.notifyExpandListViewDataSetChange()
+                    sendForeground()
+                }
+            }, IntentFilter("${this@MainActivity.packageName}_service_task_end"))
+        }
+
+        override fun onServiceDisconnected(name: ComponentName) {
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         LitePal.initialize(this)
+        val intent = Intent(this, AlarmService::class.java)
+        bindService(intent, mServiceConnection, BIND_AUTO_CREATE)
 
         initDrawerLayout()
         initFragments()
@@ -74,6 +105,9 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         mTv4.setOnClickListener(this)
     }
 
+    private var mCurrentPage = 0
+    private var mCurrentDay = 0
+    private lateinit var mNowDayBean: MutableList<TSViewTaskBean>
     private fun initFragments() {
         val days1 = listOf("25", "26", "27", "28", "29", "30", "1")
         val dayOff1 = listOf("班", "", "", "", "", "", "休")
@@ -90,24 +124,30 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                 CalendarBean(days2, dayOff2, lunarCalendar2),
                 CalendarBean(days3, dayOff3, lunarCalendar3),
         )
-        val currentPage = 1
         val sdf = SimpleDateFormat("yyyy-M-d")
-        val currentDay = getDiffDate("2021-5-2", sdf.format(Date()))
+        val diffDay = getDiffDate("2021-4-25", sdf.format(Date()))
+        mCurrentPage = diffDay / 7
+        mCurrentDay = diffDay % 7
         val dayBeans = getDayBeans(3 * 7)
-        mFirstFg = FirstFragment(this, mDrawerLayout, dayBeans[currentPage * 7 + currentDay]) { isAddedOrDeleted, _, tSViewTaskBean ->
+        mNowDayBean = dayBeans[mCurrentPage * 7 + mCurrentDay].tSViewTaskBeans
+        mFirstFg = FirstFragment(this, mDrawerLayout, dayBeans[mCurrentPage * 7 + mCurrentDay], onFinished = { taskBean, tSViewBean, isFinish ->
+            sendForeground()
+        }, onTaskBeanChanged = { isAddedOrDeleted, _, tSViewTaskBean ->
             if (isAddedOrDeleted != null) {
                 if (isAddedOrDeleted) {
-                    dayBeans[currentPage * 7 + currentDay].tSViewTaskBeans.add(tSViewTaskBean)
+                    mNowDayBean.add(tSViewTaskBean)
                 }else {
-                    dayBeans[currentPage * 7 + currentDay].tSViewTaskBeans.remove(tSViewTaskBean)
+                    mNowDayBean.remove(tSViewTaskBean)
                 }
             }
-            mSecondFg.notifyItem(currentPage * 7 + currentDay)
-        }
-        mSecondFg = SecondFragment(this, mDrawerLayout, calendar, currentPage, currentDay, dayBeans) { isAddedOrDeleted, position, _, tSViewTaskBean ->
-            if (position == currentPage * 7 + currentDay) {
+            mSecondFg.notifyItem(mCurrentPage * 7 + mCurrentDay)
+            sendForeground()
+        })
+        mSecondFg = SecondFragment(this, mDrawerLayout, calendar, mCurrentPage, mCurrentDay, dayBeans) { isAddedOrDeleted, position, _, tSViewTaskBean ->
+            if (position == mCurrentPage * 7 + mCurrentDay) {
                 //TimeSelectView内部实现了对外部数组的删除操作
                 mFirstFg.notifyExpandListViewDataSetChange()
+                sendForeground()
             }
         }
         mThirdFg = ThirdFragment(this, mDrawerLayout)
@@ -115,6 +155,46 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         mFragments.add(mFirstFg)
         mFragments.add(mSecondFg)
         mFragments.add(mThirdFg)
+    }
+
+    private lateinit var mPreTaskBean: TSViewTaskBean
+    private fun sendForeground() {
+        val calendar = Calendar.getInstance()
+        val nowH = calendar.get(Calendar.HOUR_OF_DAY)
+        val nowM = calendar.get(Calendar.MINUTE)
+        val showBean = getShowBean(nowH, nowM)
+        if (showBean != null) {
+            mPreTaskBean = showBean
+            mAlarmService.openTime(showBean.name, showBean.startTime, showBean.endTime)
+        }else {
+            mAlarmService.stopFore()
+        }
+    }
+
+    private fun getShowBean(nowHour: Int, nowMinute: Int): TSViewTaskBean? {
+        val cacheList = TreeMap<Int, TSViewTaskBean>()
+        for (it in mNowDayBean) {
+            val startTimeList = it.startTime.split(":")
+            val endTimeList = it.endTime.split(":")
+            val sH = startTimeList[0].toInt()
+            val sM = startTimeList[1].toInt()
+            val eH = endTimeList[0].toInt()
+            val eM = endTimeList[1].toInt()
+            val nowTime = nowHour * 60 + nowMinute
+            val startTime = sH * 60 + sM
+            val endTime = eH * 60 + eM
+            val isFinish = (it.any1 as TaskBean).isFinish
+            if (nowTime in startTime..endTime && !isFinish) {
+                return it
+            }else if (nowTime < startTime && !isFinish) {
+                cacheList[startTime] = it
+            }
+        }
+        val firstMap = cacheList.firstEntry()
+        if (firstMap != null) {
+            return firstMap.value
+        }
+        return null
     }
 
     private fun getDayBeans(size: Int): MutableList<TSViewDayBean> {
@@ -127,7 +207,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             edit.apply()
             val calendar = Calendar.getInstance()
             val sdf = SimpleDateFormat("yyyy-M-d")
-            calendar.time = sdf.parse("2021-5-2")!!
+            calendar.time = sdf.parse("2021-4-25")!!
             repeat(size) {
                 beans.add(TSViewDayBean(calendar.time))
                 calendar.add(Calendar.DATE, 1)
@@ -135,7 +215,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             return beans
         }else {
             repeat(size) {
-                val date = TSViewTimeUtil.getDate("2021-5-2", it)
+                val date = TSViewTimeUtil.getDate("2021-4-25", it)
                 val taskBeans = LitePal.where("date=?", date).find(TaskBean::class.java)
                 val tSViewTaskBean = LinkedList<TSViewTaskBean>()
                 taskBeans.forEach { taskBean ->
@@ -144,8 +224,8 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                 beans.add(TSViewDayBean(date, tSViewTaskBean))
             }
             beans.sortWith(Comparator{ o1, o2 ->
-                val diffDay1 = getDiffDate("2021-5-2", o1.date)
-                val diffDay2 = getDiffDate("2021-5-2", o2.date)
+                val diffDay1 = getDiffDate("2021-4-25", o1.date)
+                val diffDay2 = getDiffDate("2021-4-25", o2.date)
                 return@Comparator diffDay1 - diffDay2
             })
             return beans
@@ -207,6 +287,13 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         return super.onKeyDown(keyCode, event)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        unbindService(mServiceConnection)
+        mAlarmService.stopFore()
+        mAlarmService.stopSelf()
+    }
+
     private fun initBottomNavigationView() {
         mNavigationView = findViewById(R.id.main_nav)
         mNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -253,7 +340,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                 when (mFgViewPager.currentItem) {
                     1 -> {
                         if (mInitialY in timeViewLocation!!.top..timeViewLocation!!.bottom) {
-                            if (abs(x - mInitialX) <= TScrollViewTouchEvent.MOVE_THRESHOLD || abs(y - mInitialY) <= TScrollViewTouchEvent.MOVE_THRESHOLD) {
+                            if (abs(x - mInitialX) <= TScrollViewTouchEvent.MOVE_THRESHOLD + 3 || abs(y - mInitialY) <= TScrollViewTouchEvent.MOVE_THRESHOLD + 3) {
                                 mFgViewPager.isUserInputEnabled = false
                             }else {
                                 mFgViewPager.isUserInputEnabled = !TSViewLongClick.sHasLongClick

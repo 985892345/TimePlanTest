@@ -14,8 +14,8 @@
 
         <TimePicker
             android:id="@+id/dlg_time_picker"
-            android:layout_width="280dp"
-            android:layout_height="400dp"
+            android:layout_width="240dp"
+            android:layout_height="360dp"
             android:numbersSelectorColor="@color/default_color"
             android:theme="@style/timePicker"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -25,10 +25,9 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/dlg_time_picker_finish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="6dp"
+            android:layout_width="60dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="4dp"
             android:text="OK"
             android:theme="@style/Theme.MaterialComponents.Light"
             app:backgroundTint="@color/default_color"

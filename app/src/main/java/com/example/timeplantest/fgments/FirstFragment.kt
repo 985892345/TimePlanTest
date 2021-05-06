@@ -32,7 +32,8 @@ import kotlin.collections.forEach
 class FirstFragment(activity: AppCompatActivity,
                     drawerLayout: DrawerLayout,
                     dayBean: TSViewDayBean,
-                    onTaskBeanChanged: (isAddedOrDeleted: Boolean?, taskBean: TaskBean, tSViewTaskBean: TSViewTaskBean) -> Unit) : Fragment() {
+                    onTaskBeanChanged: (isAddedOrDeleted: Boolean?, taskBean: TaskBean, tSViewTaskBean: TSViewTaskBean) -> Unit,
+                    onFinished: ((taskBean: TaskBean, tSViewBean: TSViewTaskBean, isFinish: Boolean) -> Unit)) : Fragment() {
 
     fun notifyExpandListViewDataSetChange() {
         initializeData()
@@ -43,6 +44,7 @@ class FirstFragment(activity: AppCompatActivity,
     private val mDrawerLayout = drawerLayout
     private val mDayBean = dayBean
     private val mOnTaskBeanChanged = onTaskBeanChanged
+    private val mOnFinished = onFinished
     private lateinit var mRootView: View
     private lateinit var mExpandLv: ExpandableListView
     private lateinit var mExpandAdapter: ExpandLvAdapter
@@ -74,10 +76,12 @@ class FirstFragment(activity: AppCompatActivity,
     private fun initExpandLv() {
         initializeData()
         mExpandLv = mRootView.findViewById(R.id.fg1_expandLv)
-        mExpandAdapter = ExpandLvAdapter(mData, { taskBean, tSViewBean ->
-            mOnTaskBeanChanged.invoke(false, taskBean, tSViewBean)
+        mExpandAdapter = ExpandLvAdapter(mData, onFinished = { taskBean, tSViewTaskBean, isFinish ->
+            mOnFinished.invoke(taskBean, tSViewTaskBean, isFinish)
+        }, onDeleted = { taskBean, tSViewTaskBean ->
+            mOnTaskBeanChanged.invoke(false, taskBean, tSViewTaskBean)
             notifyExpandListViewDataSetChange()
-        }, {taskBean, tSViewBean ->
+        }, onClickItem = { taskBean, tSViewBean ->
             expandItemClick(taskBean, tSViewBean)
         })
         mExpandLv.setAdapter(mExpandAdapter)

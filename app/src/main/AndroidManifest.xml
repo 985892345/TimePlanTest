@@ -3,6 +3,8 @@
     package="com.example.timeplantest">
 
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,6 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TimePlanTest">
+
+        <service
+            android:name=".service.AlarmService"
+            android:enabled="true"
+            android:exported="true" />
+
         <activity android:name=".activity.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,9 +25,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.MainActivity">
-        </activity>
+
+        <activity android:name=".activity.MainActivity"
+            android:launchMode="singleTask"/>
+
     </application>
 
 </manifest>
