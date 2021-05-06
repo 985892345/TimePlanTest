@@ -7,23 +7,26 @@
 >1、登录，2、任务清单，3、日历，4、时间轴选取任务   
 >主要有以下功能：  
 >1、登录的账号保存，2、任务的后台提醒，3、日历与时间轴的互动  
-### First界面
+### 1、First界面
 第一个界面用于设置当天的任务清单  
-#### 1、任务清单
-使用ExpandListView使用的二级菜单（RecyclerView用来实现二级菜单过于复杂），二级菜单的任务可以点击弹开dialog进行设置。 
-#### 2、FloatingActionButton
-右下角使用的FloatingActionButton，点击弹出dialog添加任务
-### Second界面
+#### a、任务清单
+* 使用ExpandListView使用的二级菜单（RecyclerView用来实现二级菜单过于复杂）  
+* 二级菜单的任务可以点击弹开dialog进行设置。 
+#### b、FloatingActionButton
+* 点击弹出dialog添加任务
+### 2、Second界面
 第二个界面用时间轴的方式设置所有天数的所有任务  
-#### 1、日历
-用的寒假考核时写的自定义View，实现与底部的时间轴的互动，外面包括了ViewPager2，解决了与外部ViewPager2的滑动冲突。（这次还解决了ViewPager2不能得到内部实例的问题，详见上次我传在群里的ViewPager2缓存机制）
-#### 2、时间轴
-一个用于滑动选取时间段的自定义View，详见我的寒假考核的Readme [TimePlaning](https://github.com/985892345/TimePlaning.git "TimePlan")
-### Third界面
+#### a、日历
+用的寒假考核时写的自定义View  
+* 实现与底部的时间轴的互动
+* 外面包括了ViewPager2，解决了与外部ViewPager2的滑动冲突。（这次还解决了ViewPager2不能得到内部实例的问题，详见上次我传在群里的ViewPager2缓存机制）
+#### b、时间轴
+* 一个用于滑动选取时间段的自定义View，详见我的寒假考核的Readme   [TimePlaning](https://github.com/985892345/TimePlaning.git "TimePlan")
+### 3、Third界面
 第三个界面本来时用于一些设置，因时间原因，未写
-### 侧滑界面
+### 4、侧滑界面
 侧滑界面除了头像能点击外，其他按钮不能点击
-### 登录界面
+### 5、登录界面
 登录界面因时间原因只有一个按钮用于登录  
 
 ---
