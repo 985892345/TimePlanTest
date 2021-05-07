@@ -30,7 +30,7 @@
             android:layout_marginStart="8dp"
             android:padding="2dp"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_head_portrait"
+            android:src="@drawable/ic_account"
             app:layout_constraintBottom_toTopOf="@+id/view1"
             app:layout_constraintStart_toEndOf="@+id/dlg_add_btn_back"
             app:layout_constraintTop_toTopOf="parent"

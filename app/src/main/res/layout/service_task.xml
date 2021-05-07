@@ -21,15 +21,14 @@
         android:layout_height="match_parent"
         android:layout_marginEnd="10dp"
         android:layout_toStartOf="@+id/service_btn_finish"
-        android:background="@null" />
+        android:background="@android:color/transparent"/>
 
     <TextView
         android:id="@+id/service_tv_task_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/service_img_alarm"
         android:layout_marginStart="6dp"
-        android:layout_marginTop="5dp"
+        android:layout_centerVertical="true"
         android:text="任务名称"
         android:textColor="#303030" />
 
@@ -44,15 +43,11 @@
         android:text="开始行动吧！" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/service_tv_task_name"
         android:layout_alignBottom="@+id/service_hint"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
         android:layout_marginBottom="0dp"
+        android:layout_centerHorizontal="true"
         android:gravity="center">
 
         <TextView
@@ -72,14 +67,12 @@
         android:id="@+id/service_btn_finish"
         android:layout_width="60dp"
         android:layout_height="40dp"
-        android:layout_alignBottom="@+id/service_tv_task_name"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="-14dp"
+        android:layout_centerVertical="true"
         android:text="完成" />
 
     <TextView
-        android:id="@+id/service_tv_app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/service_img_alarm"

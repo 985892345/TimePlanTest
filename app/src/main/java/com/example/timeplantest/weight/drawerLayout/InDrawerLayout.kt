@@ -8,6 +8,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import com.example.timeplantest.R
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 /**
  *@author 985892345
@@ -53,16 +55,15 @@ class InDrawerLayout(activity: Activity, drawerLayout: DrawerLayout) {
         mDrawerLayout.addDrawerListener(object : DrawerListener {
             override fun onDrawerStateChanged(newState: Int) {}
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
-                // 滑动的过程中执行 slideOffset：从0到1
+                // 滑动的过程中执行 slideOffset：从0 ~ 1
                 // 侧边栏
                 val scale = 1 - slideOffset //1 ~ 0
-                val leftScale = 1 - 0.4f * scale //0.6~1.0
-                val leftAlpha = 0.4f + 0.6f * slideOffset //0.4~1.0
-                val rightScale = 0.6f + 0.4f * scale //1.0~0.6
-                val rightAlpha = 0.4f + 0.6f * scale //1.0~0.4
+                val leftScale = 1 - 0.4f * scale //0.6 ~ 1.0
+                val leftAlpha = 0.4f + 0.6f * slideOffset //0.4 ~ 1.0
+                val rightScale = 0.6f + 0.4f * scale //1.0 ~ 0.6
+                val rightAlpha = 0.4f + 0.6f * scale //1.0 ~ 0.4
                 val rotation = -5 * slideOffset //设置旋转0 ~ -5
-                val radius =
-                    Math.sqrt((3600 * slideOffset).toDouble()).toFloat() //设置圆角0 ~ 60
+                val radius = if (slideOffset < 0.2) (slideOffset * 5).pow(2) * 40 else slideOffset * 25 + 35 //设置圆角0 ~ 60
                 drawerView.scaleX = leftScale
                 drawerView.scaleY = leftScale
                 drawerView.alpha = leftAlpha

@@ -60,9 +60,10 @@
         android:id="@+id/fg1_expand_child_btn_item"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
         android:background="@null"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/fg1_expand_child_time"
+        app:layout_constraintEnd_toEndOf="@+id/fg1_expand_child_time"
         app:layout_constraintStart_toStartOf="@+id/fg1_expand_child_name"
         app:layout_constraintTop_toTopOf="parent" />
 

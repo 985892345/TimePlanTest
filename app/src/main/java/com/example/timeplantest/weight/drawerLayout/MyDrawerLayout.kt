@@ -15,8 +15,14 @@ import androidx.drawerlayout.widget.DrawerLayout
 class MyDrawerLayout(context: Context, attrs: AttributeSet?) : DrawerLayout(context, attrs) {
 
     override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
-        return if (isDrawerOpen(GravityCompat.START) && ev.x > width / 2.0f) {
-            true
-        } else super.onInterceptTouchEvent(ev)
+        if (ev.action == MotionEvent.ACTION_DOWN) {
+            if (isDrawerOpen(GravityCompat.START)) {
+                if (ev.x > width / 2) {
+                    super.onInterceptTouchEvent(ev)
+                    return true
+                }
+            }
+        }
+        return super.onInterceptTouchEvent(ev)
     }
 }

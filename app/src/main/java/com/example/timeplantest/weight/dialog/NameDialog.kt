@@ -126,14 +126,21 @@ class NameDialog(context: Context,
             mTSViewTaskBean.insideColor = mColorInside.getColor()
             mTSViewTaskBean.any2 = describe
             mOnClose.invoke(mTaskBean, mTSViewTaskBean)
+            dismiss()
+        }else {
+            Toast.makeText(context, "请输入任务名称！", Toast.LENGTH_SHORT).show()
         }
-        dismiss()
     }
 
     @SuppressLint("NonConstantResourceId")
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.btn_back, R.id.btn_finish -> close()
+            R.id.btn_back -> {
+                dismiss()
+            }
+            R.id.btn_finish -> {
+                close()
+            }
             R.id.tv_color_border -> {
                 ColorDialog(context, R.style.dialog) { color ->
                     mColorBorder.setColor(color)
