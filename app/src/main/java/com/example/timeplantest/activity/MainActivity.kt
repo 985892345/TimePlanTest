@@ -118,7 +118,6 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         val days3 = listOf("9", "10", "11", "12", "13", "14", "15")
         val dayOff3 = listOf("", "", "", "", "", "", "")
         val lunarCalendar3 = listOf("母亲节", "廿九", "三十", "四月", "初二", "初三", "初四")
-
         val calendar = listOf(
                 CalendarBean(days1, dayOff1, lunarCalendar1),
                 CalendarBean(days2, dayOff2, lunarCalendar2),
@@ -126,8 +125,8 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         )
         val sdf = SimpleDateFormat("yyyy-M-d")
         val diffDay = getDiffDate("2021-4-25", sdf.format(Date()))
-        mCurrentPage = diffDay / 7
-        mCurrentDay = diffDay % 7
+        mCurrentPage = 2
+        mCurrentDay = 6
         val dayBeans = getDayBeans(3 * 7)
         mNowDayBean = dayBeans[mCurrentPage * 7 + mCurrentDay].tSViewTaskBeans
         mFirstFg = FirstFragment(this, mDrawerLayout, dayBeans[mCurrentPage * 7 + mCurrentDay], onFinished = { taskBean, tSViewBean, isFinish ->
@@ -340,7 +339,8 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                 when (mFgViewPager.currentItem) {
                     1 -> {
                         if (mInitialY in timeViewLocation!!.top..timeViewLocation!!.bottom) {
-                            if (abs(x - mInitialX) <= TScrollViewTouchEvent.MOVE_THRESHOLD + 3 || abs(y - mInitialY) <= TScrollViewTouchEvent.MOVE_THRESHOLD + 3) {
+                            if (abs(x - mInitialX) <= TScrollViewTouchEvent.MOVE_THRESHOLD + 3
+                                || abs(y - mInitialY) <= TScrollViewTouchEvent.MOVE_THRESHOLD + 3) {
                                 mFgViewPager.isUserInputEnabled = false
                             }else {
                                 mFgViewPager.isUserInputEnabled = !TSViewLongClick.sHasLongClick
