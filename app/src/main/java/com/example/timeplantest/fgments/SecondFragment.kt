@@ -2,7 +2,6 @@ package com.example.timeplantest.fgments
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,17 +10,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.timeplantest.R
 import com.example.timeplantest.adapter.WeekVpAdapter
 import com.example.timeplantest.bean.CalendarBean
 import com.example.timeplantest.bean.TaskBean
 import com.example.timeplantest.weight.dialog.NameDialog
-import com.example.timeplantest.weight.timeselectview.TimeSelectView
-import com.example.timeplantest.weight.timeselectview.bean.TSViewDayBean
-import com.example.timeplantest.weight.timeselectview.bean.TSViewTaskBean
-import kotlin.concurrent.timerTask
+import com.ndhzs.timeselectview.TimeSelectView
+import com.ndhzs.timeselectview.bean.TSViewDayBean
+import com.ndhzs.timeselectview.bean.TSViewTaskBean
 
 /**
  *@author 985892345

@@ -39,7 +39,7 @@ class AlarmService : Service() {
     private lateinit var mTaskPendingIntent: PendingIntent
     private lateinit var mRemoteViews: RemoteViews
     fun openTime(taskName: String?, startTime: String, endTime: String) {
-        if (mIsShowFore) {
+        if (mIsShowFore && this::mRemoteViews.isInitialized) {
             if (taskName != mTaskName) {
                 mRemoteViews.setTextViewText(R.id.service_tv_task_name, taskName)
             }

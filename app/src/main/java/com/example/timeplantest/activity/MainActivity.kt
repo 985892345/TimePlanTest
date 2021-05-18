@@ -23,12 +23,11 @@ import com.example.timeplantest.fgments.SecondFragment
 import com.example.timeplantest.fgments.ThirdFragment
 import com.example.timeplantest.service.AlarmService
 import com.example.timeplantest.weight.drawerLayout.InDrawerLayout
-import com.example.timeplantest.weight.timeselectview.bean.TSViewDayBean
-import com.example.timeplantest.weight.timeselectview.bean.TSViewTaskBean
-import com.example.timeplantest.weight.timeselectview.utils.TSViewLongClick
-import com.example.timeplantest.weight.timeselectview.utils.TSViewTimeUtil
-import com.example.timeplantest.weight.timeselectview.utils.tscrollview.TScrollViewTouchEvent
+import com.ndhzs.timeselectview.bean.TSViewDayBean
+import com.ndhzs.timeselectview.bean.TSViewTaskBean
+import com.ndhzs.timeselectview.utils.TSViewLongClick
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.ndhzs.timeselectview.TimeSelectView
 import org.litepal.LitePal
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -214,7 +213,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             return beans
         }else {
             repeat(size) {
-                val date = TSViewTimeUtil.getDate("2021-4-25", it)
+                val date = getDate("2021-4-25", it)
                 val taskBeans = LitePal.where("date=?", date).find(TaskBean::class.java)
                 val tSViewTaskBean = LinkedList<TSViewTaskBean>()
                 taskBeans.forEach { taskBean ->
@@ -229,6 +228,15 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             })
             return beans
         }
+    }
+
+    private fun getDay(firstDate: String, diff: Int): String {
+        val sdf = SimpleDateFormat("yyyy-M-d")
+        val date = sdf.parse(firstDate)
+        val calendar = Calendar.getInstance()
+        calendar.time = date!!
+        calendar.add(Calendar.DATE, diff)
+        return sdf.format(calendar.time)
     }
 
     /**
@@ -325,7 +333,6 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             MotionEvent.ACTION_DOWN -> {
                 mInitialX = x
                 mInitialY = y
-                TSViewLongClick.sIsLongClickCount = 0
                 weekLocation = mSecondFg.getWeekLocation()
                 timeViewLocation = mSecondFg.getTimeSelectViewLocation()
                 mFgViewPager.isUserInputEnabled = true
@@ -339,8 +346,8 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                 when (mFgViewPager.currentItem) {
                     1 -> {
                         if (mInitialY in timeViewLocation!!.top..timeViewLocation!!.bottom) {
-                            if (abs(x - mInitialX) <= TScrollViewTouchEvent.MOVE_THRESHOLD + 3
-                                || abs(y - mInitialY) <= TScrollViewTouchEvent.MOVE_THRESHOLD + 3) {
+                            if (abs(x - mInitialX) <= TimeSelectView.MOVE_THRESHOLD + 3
+                                || abs(y - mInitialY) <= TimeSelectView.MOVE_THRESHOLD + 3) {
                                 mFgViewPager.isUserInputEnabled = false
                             }else {
                                 mFgViewPager.isUserInputEnabled = !TSViewLongClick.sHasLongClick

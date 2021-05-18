@@ -1,6 +1,6 @@
 # 项目停更
 项目永久停更，本项目作为红岩期中考核，现在不再维护，因为没有联网，时间将永远停于5月15日，
-里面的时间轴控件请看[TimeSelectView](https://github.com/985892345/TimeSelectView.git "TimeSelectView")
+里面的时间轴控件请看 [TimeSelectView_Library](https://github.com/985892345/TimeSelectView_Library "TimeSelectView_Library")
 
 # TimePlanTest
  红岩期中作业，写的一个类似于任务清单的软件
@@ -28,7 +28,7 @@
 * 解决了与Fragment的ViewPager2的滑动冲突
 * 这次还解决了ViewPager2不能得到内部实例的问题，详见上次我传在群里的ViewPager2缓存机制
 #### b、时间轴
-一个用于滑动选取时间段的自定义View，详见我的寒假考核的Readme   [TimePlaning](https://github.com/985892345/TimePlaning.git "TimePlan")
+一个用于滑动选取时间段的自定义View，详见我的寒假考核的Readme ---> [TimePlaning](https://github.com/985892345/TimePlaning.git "TimePlan")
 * 长按滑动选取任务
 * 任务可点击设置名称
 * 本次实现了寒假未实现的功能，设置任务的颜色
@@ -40,11 +40,6 @@
 登录界面用的以前的轮子
 * 支持注册
 * 支持登录密码的保存
-
----
-## 二、其他
-目前有一些问题无法解决
-1. 第二个界面的时间轴与外面的ViewPager2的滑动冲突问题（此问题较难解决，因为ViewPager2是final无法改写）
 
 ---
 ### 三、感想
