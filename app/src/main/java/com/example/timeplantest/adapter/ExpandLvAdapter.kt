@@ -8,7 +8,7 @@ import android.widget.*
 import com.example.timeplantest.R
 import com.example.timeplantest.bean.ExpandBean
 import com.example.timeplantest.bean.TaskBean
-import com.example.timeplantest.weight.timeselectview.bean.TSViewTaskBean
+import com.ndhzs.timeselectview.bean.TSViewTaskBean
 import java.util.*
 
 /**

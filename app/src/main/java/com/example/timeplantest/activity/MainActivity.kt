@@ -4,6 +4,7 @@ import android.content.*
 import android.graphics.Rect
 import android.os.Bundle
 import android.os.IBinder
+import android.util.Log
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
@@ -41,7 +42,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     private lateinit var mFgViewPager: ViewPager2
     private lateinit var mFgVpAdapter: FgVpAdapter
     private lateinit var mNavigationView: BottomNavigationView
-    private val mFragments= ArrayList<Fragment>()
+    private val mFragments = ArrayList<Fragment>()
     private lateinit var mFirstFg: FirstFragment
     private lateinit var mSecondFg: SecondFragment
     private lateinit var mThirdFg: ThirdFragment
@@ -230,7 +231,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
-    private fun getDay(firstDate: String, diff: Int): String {
+    private fun getDate(firstDate: String, diff: Int): String {
         val sdf = SimpleDateFormat("yyyy-M-d")
         val date = sdf.parse(firstDate)
         val calendar = Calendar.getInstance()
@@ -271,7 +272,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         mFgViewPager = findViewById(R.id.main_vp_fragments)
         mFgVpAdapter = FgVpAdapter(this, mFragments)
         mFgViewPager.adapter = mFgVpAdapter
-        mFgViewPager.offscreenPageLimit = 2
+        mFgViewPager.offscreenPageLimit = 1
         mFgViewPager.registerOnPageChangeCallback(object : OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
@@ -322,39 +323,19 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         })
     }
 
-    private var mInitialX = 0
-    private var mInitialY = 0
     private var weekLocation: Rect? = null
-    private var timeViewLocation: Rect? = null
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
-        val x = ev.rawX.toInt()
         val y = ev.rawY.toInt()
         when (ev.action) {
             MotionEvent.ACTION_DOWN -> {
-                mInitialX = x
-                mInitialY = y
                 weekLocation = mSecondFg.getWeekLocation()
-                timeViewLocation = mSecondFg.getTimeSelectViewLocation()
-                mFgViewPager.isUserInputEnabled = true
-                if (mFgViewPager.currentItem == 1) {
-                    if (y in weekLocation!!.top..weekLocation!!.bottom) {
-                        mFgViewPager.isUserInputEnabled = false
-                    }
-                }
             }
-            MotionEvent.ACTION_MOVE -> {
-                when (mFgViewPager.currentItem) {
-                    1 -> {
-                        if (mInitialY in timeViewLocation!!.top..timeViewLocation!!.bottom) {
-                            if (abs(x - mInitialX) <= TimeSelectView.MOVE_THRESHOLD + 3
-                                || abs(y - mInitialY) <= TimeSelectView.MOVE_THRESHOLD + 3) {
-                                mFgViewPager.isUserInputEnabled = false
-                            }else {
-                                mFgViewPager.isUserInputEnabled = !TSViewLongClick.sHasLongClick
-                            }
-                        }
-                    }
-                }
+        }
+        if (mFgViewPager.currentItem == 1) {
+            if (y in weekLocation!!.top..weekLocation!!.bottom) {
+                mFgViewPager.isUserInputEnabled = false
+            }else {
+                mSecondFg.touchEvent(ev, mFgViewPager)
             }
         }
         return super.dispatchTouchEvent(ev)

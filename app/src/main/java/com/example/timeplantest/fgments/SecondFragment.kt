@@ -2,7 +2,9 @@ package com.example.timeplantest.fgments
 
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -10,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.timeplantest.R
 import com.example.timeplantest.adapter.WeekVpAdapter
@@ -52,18 +55,13 @@ class SecondFragment(activity: AppCompatActivity,
         return mWeekLocation
     }
 
-    fun getTimeSelectViewLocation(): Rect {
+    /**
+     * 解决 TimeSelectView 与 ViewPager2 的滑动冲突
+     */
+    fun touchEvent(ev: MotionEvent, viewPager2: ViewPager2) {
         if (this::mTimeSelectView.isInitialized) {
-            if (mTimeSelectViewLocation.width() != mTimeSelectView.width) {
-                val location = IntArray(2)
-                mTimeSelectView.getLocationOnScreen(location)
-                mTimeSelectViewLocation.left = location[0]
-                mTimeSelectViewLocation.top = location[1]
-                mTimeSelectViewLocation.right = location[0] + mTimeSelectView.width
-                mTimeSelectViewLocation.bottom = location[1] + mTimeSelectView.height
-            }
+            viewPager2.isUserInputEnabled = !mTimeSelectView.isDealWithTouchEvent(ev, 1)
         }
-        return mTimeSelectViewLocation
     }
 
     private val mActivity = activity
@@ -79,9 +77,11 @@ class SecondFragment(activity: AppCompatActivity,
     private lateinit var mTimeSelectView: TimeSelectView
 
     private val mWeekLocation = Rect()
-    private val mTimeSelectViewLocation = Rect()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        if (this::mRootView.isInitialized) {
+            return mRootView
+        }
         mRootView = inflater.inflate(R.layout.fragment2_second, container, false)
         initToolbar()
         initWeekView()
@@ -123,14 +123,6 @@ class SecondFragment(activity: AppCompatActivity,
     private fun initTimeSelectView() {
         val currentItem = mCurrentWeekPage * 7 + mCurrentDay
         mTimeSelectView = mRootView.findViewById(R.id.fg2_timeSelectView)
-        mTimeSelectView.post {
-            val location = IntArray(2)
-            mTimeSelectView.getLocationOnScreen(location)
-            mTimeSelectViewLocation.left = location[0]
-            mTimeSelectViewLocation.top = location[1]
-            mTimeSelectViewLocation.right = location[0] + mTimeSelectView.width
-            mTimeSelectViewLocation.bottom = location[1] + mTimeSelectView.height
-        }
         mTimeSelectView.initializeBean(mDayBeans, currentItem, currentItem)
         mTimeSelectView.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {

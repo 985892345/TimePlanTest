@@ -1,6 +1,7 @@
 package com.example.timeplantest.fgments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,8 +16,8 @@ import com.example.timeplantest.adapter.ExpandLvAdapter
 import com.example.timeplantest.bean.ExpandBean
 import com.example.timeplantest.bean.TaskBean
 import com.example.timeplantest.weight.dialog.AddTaskDialog
-import com.example.timeplantest.weight.timeselectview.bean.TSViewDayBean
-import com.example.timeplantest.weight.timeselectview.bean.TSViewTaskBean
+import com.ndhzs.timeselectview.bean.TSViewDayBean
+import com.ndhzs.timeselectview.bean.TSViewTaskBean
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 import kotlin.collections.ArrayList
@@ -53,6 +54,9 @@ class FirstFragment(activity: AppCompatActivity,
     private var mData = ArrayList<ExpandBean>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        if (this::mRootView.isInitialized) {
+            return mRootView
+        }
         mRootView = inflater.inflate(R.layout.fragment1_first, container, false)
         initToolbar()
         initExpandLv()

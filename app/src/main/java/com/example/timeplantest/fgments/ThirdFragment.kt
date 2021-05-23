@@ -27,6 +27,9 @@ class ThirdFragment(activity: AppCompatActivity, drawerLayout: DrawerLayout) : F
     private lateinit var mRootView: View
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        if (this::mRootView.isInitialized) {
+            return mRootView
+        }
         mRootView = inflater.inflate(R.layout.fragment3_third, container, false)
         initToolbar()
         initView()

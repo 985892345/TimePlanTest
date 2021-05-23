@@ -28,7 +28,8 @@
 * 解决了与Fragment的ViewPager2的滑动冲突
 * 这次还解决了ViewPager2不能得到内部实例的问题，详见上次我传在群里的ViewPager2缓存机制
 #### b、时间轴
-一个用于滑动选取时间段的自定义View，详见我的寒假考核的Readme ---> [TimePlaning](https://github.com/985892345/TimePlaning.git "TimePlan")
+一个用于滑动选取时间段的自定义View，
+详见我写的 Library ---> [TimeSelectView_Library](https://github.com/985892345/TimeSelectView_Library "TimeSelectView_Library")
 * 长按滑动选取任务
 * 任务可点击设置名称
 * 本次实现了寒假未实现的功能，设置任务的颜色

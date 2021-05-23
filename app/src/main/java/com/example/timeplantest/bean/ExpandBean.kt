@@ -1,6 +1,6 @@
 package com.example.timeplantest.bean
 
-import com.example.timeplantest.weight.timeselectview.bean.TSViewTaskBean
+import com.ndhzs.timeselectview.bean.TSViewTaskBean
 
 /**
  *@author 985892345

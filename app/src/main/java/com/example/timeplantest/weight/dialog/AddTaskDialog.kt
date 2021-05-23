@@ -4,14 +4,13 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
 import androidx.core.content.ContextCompat
 import com.example.timeplantest.R
 import com.example.timeplantest.bean.TaskBean
-import com.example.timeplantest.weight.timeselectview.bean.TSViewTaskBean
+import com.ndhzs.timeselectview.bean.TSViewTaskBean
 import java.text.SimpleDateFormat
 import java.util.*
 

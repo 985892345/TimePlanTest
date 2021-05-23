@@ -7,11 +7,10 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
-import androidx.core.content.ContextCompat
 import com.example.timeplantest.R
 import com.example.timeplantest.bean.TaskBean
 import com.example.timeplantest.weight.RoundCornerView
-import com.example.timeplantest.weight.timeselectview.bean.TSViewTaskBean
+import com.ndhzs.timeselectview.bean.TSViewTaskBean
 
 /**
  *@author 985892345
